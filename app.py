@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -42,14 +43,11 @@ def bfhl():
                 else:
                     odd_numbers.append(str(el))
             elif isinstance(el, str) and el.isalpha():
-                # For alphabets array → keep whole word uppercase
                 alphabets.append(el.upper())
-                # For concat string → break into characters
                 alpha_concat.extend(list(el))
             else:
                 special_characters.append(el)
 
-        # Build concat string (reverse + alternating caps)
         concat_chars = alpha_concat[::-1]
         concat_string = ""
         flag_upper = True
@@ -77,4 +75,5 @@ def bfhl():
 
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
