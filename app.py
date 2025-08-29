@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Constants for the user details
 USER_ID = "somil_jain_21042004"
-EMAIL = "somiljain2104@gmail.com"
+EMAIL = "somiljain2022@vitbhopal.ac.in"
 ROLL_NUMBER = "22BCE10387 "
 
 @app.route('/', methods=['GET'])
