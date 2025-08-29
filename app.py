@@ -1,11 +1,18 @@
-from flask import Flask, request, Response
-import json
+from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 
+# Constants for the user details
 USER_ID = "somil_jain_21042004"
 EMAIL = "somiljain2104@gmail.com"
 ROLL_NUMBER = "22BCE10387 "
+
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({
+        "message": "Flask server is running. Use POST /bfhl with JSON data."
+    })
 
 @app.route('/bfhl', methods=['POST'])
 def bfhl():
@@ -48,8 +55,7 @@ def bfhl():
             concat_string += ch.upper() if flag_upper else ch.lower()
             flag_upper = not flag_upper
 
-        # Construct response in exact key order
-        response_dict = {
+        response = {
             "is_success": True,
             "user_id": USER_ID,
             "email": EMAIL,
@@ -62,8 +68,11 @@ def bfhl():
             "concat_string": concat_string
         }
 
-        response_json = json.dumps(response_dict, separators=(',', ':'), ensure_ascii=False)
-        return Response(response_json, mimetype='application/json')
+        return jsonify(response), 200
 
     except Exception as e:
-        return Response(json.dumps({"is_success": False, "error": str(e)}), mimetype='application/json')
+        return jsonify({"is_success": False, "error": str(e)}), 500
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
