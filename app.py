@@ -1,12 +1,10 @@
-import os
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Constants for the user details
-USER_ID = "somil_jain_21042004"
-EMAIL = "somiljain2104@gmail.com"
-ROLL_NUMBER = "22BCE10387 "
+USER_ID = "john_doe_17091999"
+EMAIL = "john@xyz.com"
+ROLL_NUMBER = "ABCD123"
 
 @app.route('/', methods=['GET'])
 def home():
@@ -23,7 +21,6 @@ def bfhl():
         even_numbers = []
         alphabets = []
         special_characters = []
-
         total_sum = 0
         alpha_concat = []
 
@@ -71,9 +68,10 @@ def bfhl():
         return jsonify(response), 200
 
     except Exception as e:
-        return jsonify({"is_success": False, "error": str(e)}), 500
-
+        return jsonify({
+            "is_success": False,
+            "error": str(e)
+        }), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run()
